@@ -49,6 +49,38 @@ If you only change application code in `src/`, usually this is enough:
 docker compose up -d
 ```
 
+## Stop and remove containers
+- Stop running containers:
+
+```bash
+docker compose stop
+```
+
+- Remove stopped containers, networks, and default volumes created by Compose:
+
+```bash
+docker compose down
+```
+
+- Remove containers, networks, and volumes created by Compose (use with care):
+
+```bash
+docker compose down -v
+```
+
+- Clean up more completely, including images built by Compose and orphan containers:
+
+```bash
+docker compose down --rmi all -v --remove-orphans
+```
+
+This is the most thorough cleanup for the Compose stack. It removes:
+- containers
+- networks
+- volumes created by Compose
+- images built by Compose
+- orphan containers from the same project
+
 ## Common commands
 
 - Install PHP dependencies:
