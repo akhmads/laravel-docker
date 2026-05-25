@@ -1,4 +1,4 @@
-# Docker Setup for Laravel Starter Kit
+# Docker Setup for Laravel
 
 ## Overview
 Dokumentasi ini menjelaskan setup Docker untuk aplikasi Laravel dengan kode aplikasi di folder `src`.
