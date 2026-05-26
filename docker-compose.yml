@@ -11,8 +11,6 @@ services:
       - ./src:/var/www/html:delegated
       - ./src/vendor:/var/www/html/vendor
       - ./src/node_modules:/var/www/html/node_modules
-    environment:
-      COMPOSER_ALLOW_SUPERUSER: 1
     networks:
       - laravel_network
 
