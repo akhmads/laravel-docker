@@ -1,19 +1,5 @@
 # ==========================================
-# STAGE 1: Frontend Builder (Dapur untuk Node.js)
-# ==========================================
-FROM node:22-alpine AS frontend-builder
-WORKDIR /app
-
-COPY src/package*.json ./
-COPY src/vite.config.js ./
-COPY src/resources ./resources
-COPY src/public ./public
-
-RUN npm ci
-RUN npm run build
-
-# ==========================================
-# STAGE 2: Backend Builder (Dapur untuk Composer)
+# STAGE 1: Backend Builder (Dapur untuk Composer)
 # ==========================================
 FROM composer:latest AS backend-builder
 WORKDIR /app
@@ -22,6 +8,21 @@ COPY src/composer.json src/composer.lock ./
 RUN composer install --no-dev --ignore-platform-reqs --no-scripts --no-interaction
 COPY src/ ./
 RUN composer dump-autoload --optimize
+
+# ==========================================
+# STAGE 2: Frontend Builder (Dapur untuk Node.js)
+# ==========================================
+FROM node:22-alpine AS frontend-builder
+WORKDIR /app
+
+COPY src/package*.json ./
+COPY src/vite.config.js ./
+COPY src/resources ./resources
+COPY src/public ./public
+COPY --from=backend-builder /app/vendor ./vendor
+
+RUN npm ci
+RUN npm run build
 
 # ==========================================
 # STAGE 3: Production Image (Ruang Makan / Image Final)
